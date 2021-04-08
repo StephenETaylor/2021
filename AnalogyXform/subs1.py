@@ -63,8 +63,10 @@ import time
 
 embedding = "English.w2v.bin"
 
-relations = [ "relations/capital-common-countries", "relations/capital-world",
-            "relations/city-in-state", "relations/country-currency",
+relations = ["relations/capital-common-countries",
+            "relations/capital-world",
+            "relations/city-in-state",
+            "relations/country-currency",
             "relations/family",
             "relations/gram1-adjective-adverb",
             "relations/gram2-opposite",
@@ -77,7 +79,7 @@ relations = [ "relations/capital-common-countries", "relations/capital-world",
             "relations/gram9-plural-verbs"]
 
 #parameters
-numRel = 0
+numRel = 4
 accn = 1
 holdout = 1
 lPr = 0.25 # fraction of analogies successful = (left_prod+right_prod)/nF
@@ -90,7 +92,7 @@ LearningRate = 0.001
 Iterations = 3001
 Regularization = 0.99
 Cwidth = 300
-Pinned = 55 # 50->1.012 # 40->.908  # 20->.522; # 60->1.02
+Pinned = 96 #60 #55->1.052 # 50->1.012 # 40->.908  # 20->.522; # 60->1.02
 
 def main():
     print(time_check())
@@ -388,7 +390,7 @@ def train(diffvec,nrel,target):
             mss = np.mean(Q)
             print('goal:', sss , mss ,C[0][0], shebang, a)
             # added adjustment to learning rate 7.4.2021
-            if oldgoal is not None and (sss-a < oldgoal) and (oldgoal < sss+a):
+            if oldgoal is not None and oldgoal-sss > 0 and abs(oldgoal-sss) < a/max(C.size,Q.size):
                 a = a/2
                 currentRegularization = 1-a*10
             oldgoal = sss
