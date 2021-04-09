@@ -13,3 +13,14 @@ The url is:
     http://vectors.nlpl.eu/repository/20/12.zip
 The description is:
     Gigaword gensim continuous Skipgram lemmatization=False
+
+The Arabic text embedding is from the same site.
+
+The url is:
+    http://vectors.nlpl.eu/repository/20/31.zip
+The description is:
+    Arabic CoNLL17 corpus gensim continuous Skipgram lemmatization=False
+
+[so I cite their paper:
+Fares, Murhaf; Kutuzov, Andrei; Oepen, Stephan & Velldal, Erik (2017). Word vectors, reuse, and replicability: Towards a community repository of large-text resources, In Jörg Tiedemann (ed.), Proceedings of the 21st Nordic Conference on Computational Linguistics, NoDaLiDa, 22-24 May 2017. Linköping University Electronic Press. ISBN 978-91-7685-601-7
+]
