@@ -50,7 +50,7 @@
      be reimplemented to avoid that, but isn't top priority.  And if I did,
      I'd eliminate the cache, which would slow the nn-searches back down .])
 """
-import csls
+#import csls
 import datetime
 import gensim.models as gm
 import itertools as it
@@ -61,11 +61,13 @@ import plotting
 import scipy.linalg as sl
 import time
 
-embedding = "English.w2v.bin"
+Language = 0 # English = 0, Arabic = 1
+Eembedding = "English.w2v.bin"
+Aembedding = ""
 
 # some tested with parameters: 
 #   Holdout=1, accn=1, preNorm=doPCA=True, successful=1, lPr=0.25
-relations = [
+Erelations = [
             #0 |F|=16, Pinned=# 20:.522,40:.908,50:1.012,55:1.052,60:1.08
             "relations/capital-common-countries",
             "relations/capital-world",
@@ -84,8 +86,48 @@ relations = [
             "relations/gram8-plural",
             "relations/gram9-plural-verbs"]
 
+Arelations  = [
+                #0
+                "Arelations/iswas.txt",
+                "Arelations/noun-bil-noun.txt",
+                "Arelations/noun-b-noun.txt",
+                "Arelations/noun-b-noun.txt~",
+                "Arelations/noun-definite.txt",
+                #5
+                "Arelations/noun-hA-noun-h.txt",
+                "Arelations/noun-mA.txt",
+                "Arelations/noun-noun-ha.txt",
+                "Arelations/noun-noun-h.txt",
+                "Arelations/noun-w-noun.txt",
+                #10
+                "Arelations/verb-she-hes.txt",
+                "Arelations/verb-verb-hA.txt",
+                "Arelations/verb-verb-h.txt",
+                "Arelations/vheher-vhehim.txt",
+                "Arelations/vheher-vsheher.txt",
+                #15
+                "Arelations/vheher-vshehim.txt",
+                "Arelations/vheher-vshe.txt",
+                "Arelations/vhehim-vsheher.txt",
+                "Arelations/vhehim-vshehim.txt",
+                "Arelations/vhehim-vshe.txt",
+                #20
+                "Arelations/vhe-vheher.txt",
+                "Arelations/vhe-vhehim.txt",
+                "Arelations/vhe-vsheher.txt",
+                "Arelations/vhe-vshehim.txt",
+                "Arelations/vhe-vshe.txt",
+                #25
+                "Arelations/vsheher-vshehim.txt",
+                "Arelations/vshe-vsheher.txt",
+                "Arelations/vshe-vshehim.txt"
+              ]
+
+embedding = [Eembedding, Aembedding][Language]
+relations = [Erelations, Arelations][Language]
+
 #parameters
-numRel = 12
+numRel = 11
 accn = 1
 holdout = 1
 lPr = 0.25 # fraction of analogies successful = (left_prod+right_prod)/nF
@@ -101,7 +143,9 @@ Cwidth = 300
 Pinned = 96 #60 
 
 def main():
-    print(time_check())
+    print( time_check(), 'relation:', relations[numRel] , 'accn:', accn , 'holdout:', 
+    holdout , 'lPr:', lPr , 'preNorm:', preNorm , 'successful:', successful , 
+    'doPCA:', doPCA , 'Pinned:', Pinned)
     # set up language model
     wordVectors = gm.KeyedVectors.load_word2vec_format(embedding, binary = True)
     dim = wordVectors.vectors.shape[1]
@@ -166,7 +210,7 @@ def main():
                 else:
                     fstat[(l0,l1,r0)] = False
 
-        print('checked pairs',time_check())
+        print('checked pairs |F| =',len(F), time_check())
         # review results and build the R+H relation
         RpH = []
         for i,pair in enumerate(F):
