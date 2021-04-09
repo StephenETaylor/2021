@@ -63,10 +63,15 @@ import time
 
 embedding = "English.w2v.bin"
 
-relations = ["relations/capital-common-countries",
+# some tested with parameters: 
+#   Holdout=1, accn=1, preNorm=doPCA=True, successful=1, lPr=0.25
+relations = [
+            #0 |F|=16, Pinned=# 20:.522,40:.908,50:1.012,55:1.052,60:1.08
+            "relations/capital-common-countries",
             "relations/capital-world",
             "relations/city-in-state",
             "relations/country-currency",
+            #4 |F|=8, Pinned = 96:.994
             "relations/family",
             "relations/gram1-adjective-adverb",
             "relations/gram2-opposite",
@@ -75,11 +80,12 @@ relations = ["relations/capital-common-countries",
             "relations/gram5-present-participle",
             "relations/gram6-nationality-adjective",
             "relations/gram7-past-tense",
+            #12
             "relations/gram8-plural",
             "relations/gram9-plural-verbs"]
 
 #parameters
-numRel = 4
+numRel = 12
 accn = 1
 holdout = 1
 lPr = 0.25 # fraction of analogies successful = (left_prod+right_prod)/nF
@@ -92,7 +98,7 @@ LearningRate = 0.001
 Iterations = 3001
 Regularization = 0.99
 Cwidth = 300
-Pinned = 96 #60 #55->1.052 # 50->1.012 # 40->.908  # 20->.522; # 60->1.02
+Pinned = 96 #60 
 
 def main():
     print(time_check())
@@ -390,7 +396,7 @@ def train(diffvec,nrel,target):
             mss = np.mean(Q)
             print('goal:', sss , mss ,C[0][0], shebang, a)
             # added adjustment to learning rate 7.4.2021
-            if oldgoal is not None and oldgoal-sss > 0 and abs(oldgoal-sss) < a/max(C.size,Q.size):
+            if oldgoal is not None and oldgoal-sss >= 0 and abs(oldgoal-sss) < a/max(C.size,Q.size):
                 a = a/2
                 currentRegularization = 1-a*10
             oldgoal = sss
