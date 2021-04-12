@@ -61,7 +61,7 @@ import plotting
 import scipy.linalg as sl
 import time
 
-Language = 0 # English = 0, Arabic = 1
+Language = 1 # English = 0, Arabic = 1
 Eembedding = "English.w2v.bin"
 Aembedding = "Arabic.w2v.bin"
 
@@ -127,13 +127,14 @@ embedding = [Eembedding, Aembedding][Language]
 relations = [Erelations, Arelations][Language]
 
 #parameters
-numRel = 11
+numRel = None #11
 accn = 1
 holdout = 1
 lPr = 0.25 # fraction of analogies successful = (left_prod+right_prod)/nF
 preNorm = True
 successful = 1 #threshold for including pair in transform goal
 doPCA = True
+endEarly = True
 
 # training related:
 LearningRate = 0.001
@@ -142,8 +143,18 @@ Regularization = 0.99
 Cwidth = 300
 Pinned = 96 #60 
 
+# just a format:
+F3f = '%.3f'
+
 def main():
-    print( time_check(), 'relation:', relations[numRel] , 'accn:', accn , 'holdout:', 
+    """
+        main is guided by the global parameters, none of which is changed
+    """
+    if numRel is None:
+        chacha = ''
+    else:
+        chacha = 'relation '+relations[numRel]
+    print( time_check(), chacha, 'accn:', accn , 'holdout:', 
     holdout , 'lPr:', lPr , 'preNorm:', preNorm , 'successful:', successful , 
     'doPCA:', doPCA , 'Pinned:', Pinned)
     # set up language model
@@ -158,7 +169,12 @@ def main():
     print(embedding, ' loaded',time_check(),flush = True)
 
     # read in the relation
-    for Fn in relations[numRel:numRel+1]:
+    if numRel is None:
+        chacha = relations
+    else:
+        chacha = relations[numRel:] #   numRel+1]
+    for Fn in chacha:
+        #print('relation', Fn)
         F = []
         with open(Fn) as fi:
             for lin in fi: 
@@ -210,14 +226,45 @@ def main():
                 else:
                     fstat[(l0,l1,r0)] = False
 
-        print('checked pairs |F| =',len(F), time_check())
+        successes1 = (sum(left_prod) + sum(right_prod))/2
+        successes2 = sum(useF)/2
+        if successes1 != successes2:
+            raise Exception('bug')
+        sr1 = successes1 / nF/(nF-1)
+        usable = 0
+        for i in useF:
+            if i != 0:
+                usable += 1
+        sr2 = successes2 / usable / (usable-1)
+
+        print(Fn,nF, usable, F3f%sr1, F3f%sr2, time_check())
+
+
         # review results and build the R+H relation
         RpH = []
         for i,pair in enumerate(F):
             success_ratio = (left_prod[i]+right_prod[i])/(nF-1) 
             if left_prod[i] > 0 and right_prod[i] > 0 and success_ratio > lPr:
                 RpH.append(pair)
-        print(Fn, len(F),len(RpH), time_check())
+        score = 0
+        for i,(l0,l1) in enumerate(RpH):
+            for j,(r0,r1) in enumerate(RpH):
+                if i==j : continue
+                if fstat[(l0,l1,r0)] :
+                    score += 1
+
+        denom = len(RpH)*(len(RpH)-1)
+        if denom == 0:
+            sr3 = None
+            print(Fn, nF,len(RpH), sr3, time_check())
+        else:
+            sr3 = score/denom
+            print(Fn, nF,len(RpH), F3f%sr3, time_check())
+
+        if len(RpH) < holdout +1:
+            continue
+        if  endEarly:
+            continue
         
         baseResults = [0]*4
         testResults = [0]*4
@@ -417,6 +464,9 @@ def train(diffvec,nrel,target):
         nrel is number of vector inthe array
         return a C array such that 
         E = diffvec @ C yields an array E == target
+
+        a number of global values also control the training
+        see (way) above
     """
 
     # See lengthy comment at top of program about training
