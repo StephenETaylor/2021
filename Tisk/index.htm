@@ -1,0 +1,27 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type=bogus id='dir' style="display:none;">
+Evalita_Technical_Report.pdf
+index.htm
+RuShiftEval_Description_Paper.pdf
+SemEval20_task1.pdf
+</script>
+
+<script>
+	function addf(fn){
+		document.write("<a href='"+fn+"'>")
+		document.write(fn)
+		document.write("</a>")
+		document.write("<br/>")
+	}
+	for (const fn of $("#dir").text().split('\n')){
+		addf(fn)
+	}
+</script>
+</head>
+<body>
+
+</body>
+</html>
