@@ -63,7 +63,7 @@ import time
 
 Language = 0 # English = 0, Arabic = 1
 Eembedding = "English.w2v.bin"
-Aembedding = ""
+Aembedding = "Arabic.w2v.bin"
 
 # some tested with parameters: 
 #   Holdout=1, accn=1, preNorm=doPCA=True, successful=1, lPr=0.25

@@ -31,6 +31,6 @@ I slightly edited the family relation, because the NLPL embedding did not
 include he, she, his, hers.   
 
 The Arabic relations files are described in the paper:
-Stephen Taylor and Tomáš Brychcin, The representation of some phrases in Arabic word semantic vector spaces, Open Computer Science, 8(1), pp. 182-193
+Stephen Taylor and Tomáš Brychcin, The representation of some phrases in Arabic word semantic vector spaces, Open Computer Science, 8(1), 2018, pp. 182-193
 
 
