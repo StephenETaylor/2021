@@ -1,0 +1,339 @@
+relations/capital-common-countries 23 21 0.237 0.286 34.907 48.67
+relations/capital-common-countries 23 17 0.375 0.000 48.67
+relations/capital-world 40 38 0.217 0.240 109.174 157.84
+relations/capital-world 40 25 0.450 0.001 157.84
+relations/city-in-state 40 30 0.038 0.069 108.392 266.24
+relations/city-in-state 40 0 None 0.000 266.24
+relations/country-currency 29 22 0.079 0.139 56.478 322.71
+relations/country-currency 29 8 0.482 0.000 322.71
+relations/family 21 15 0.121 0.243 28.620 351.33
+relations/family 21 8 0.464 0.000 351.33
+relations/gram1-adjective-adverb 31 5 0.010 0.450 60.464 74.41
+relations/gram1-adjective-adverb 31 0 None 0.000 74.41
+relations/gram2-opposite 29 6 0.004 0.100 52.782 127.19
+relations/gram2-opposite 29 0 None 0.000 127.19
+relations/gram3-comparative 37 27 0.062 0.118 92.499 219.69
+relations/gram3-comparative 37 5 0.500 0.000 219.69
+relations/gram4-superlative 34 14 0.017 0.104 77.941 297.63
+relations/gram4-superlative 34 0 None 0.000 297.63
+relations/gram5-present-participle 33 17 0.030 0.118 73.501 371.14
+relations/gram5-present-participle 33 0 None 0.000 371.14
+relations/gram6-nationality-adjective 40 40 0.458 0.458 109.355 480.49
+relations/gram6-nationality-adjective 40 35 0.553 0.001 480.49
+relations/gram7-past-tense 40 27 0.027 0.060 108.354 588.85
+relations/gram7-past-tense 40 1 None 0.000 588.85
+relations/gram8-plural 37 20 0.022 0.076 91.257 680.10
+relations/gram8-plural 37 0 None 0.000 680.10
+relations/gram9-plural-verbs 30 20 0.072 0.166 60.636 740.74
+relations/gram9-plural-verbs 30 9 0.528 0.000 740.74
+
+
+
+Arabic:, NLPR embedding, Language=1
+
+Arelations/iswas.txt 20 9 0.018 0.097 58.095 106.87
+Arelations/iswas.txt 20 0 None 0.000 106.87
+missing key: بالتعاون
+missing key: بالقرب
+missing key: بالرغم
+missing key: بالفعل
+missing key: بالكامل
+missing key: بالمدينة
+missing key: بالذكر
+missing key: بالتالي
+missing key: بالولايات
+missing key: بالاشتراك
+Arelations/noun-bil-noun.txt 20 0 0.000 None 14.985 121.86
+Arelations/noun-bil-noun.txt 20 0 None 0.000 121.86
+missing key: بجمهورية
+missing key: برغم
+missing key: بكامل
+Arelations/noun-b-noun.txt 20 0 0.000 None 44.075 165.93
+Arelations/noun-b-noun.txt 20 0 None 0.000 165.93
+missing key: بضافة
+Arelations/noun-b-noun.txt~ 20 0 0.000 None 38.021 203.95
+Arelations/noun-b-noun.txt~ 20 0 None 0.000 203.95
+Arelations/noun-definite.txt 29 7 0.005 0.095 131.633 335.59
+Arelations/noun-definite.txt 29 0 None 0.000 335.59
+missing key: طوله
+missing key: مسيرته
+missing key: مسيرتها
+missing key: طولها
+missing key: عمرها
+missing key: مساحته
+missing key: اسمها
+missing key: مقره
+missing key: مقرها
+missing key: حياته
+missing key: حياتها
+missing key: حينه
+missing key: حينها
+missing key: كونه
+missing key: كونها
+missing key: كتبها
+missing key: وقته
+missing key: وقتها
+missing key: والدها
+missing key: اعتباره
+missing key: اعتبارها
+missing key: تاريخه
+missing key: تاريخها
+missing key: وضعه
+missing key: وضعها
+missing key: أهلها
+missing key: ذاته
+missing key: ذاتها
+missing key: معظمه
+missing key: معظمها
+missing key: أعماله
+missing key: أعمالها
+Arelations/noun-hA-noun-h.txt 20 0 0.000 None 0.002 335.59
+Arelations/noun-hA-noun-h.txt 20 0 None 0.000 335.59
+Arelations/noun-mA.txt 20 6 0.008 0.100 61.591 397.18
+Arelations/noun-mA.txt 20 0 None 0.000 397.18
+Arelations/noun-noun-ha.txt 20 0 0.000 None 0.320 397.50
+Arelations/noun-noun-ha.txt 20 0 None 0.000 397.50
+Arelations/noun-noun-h.txt 20 0 0.000 None 5.081 402.58
+Arelations/noun-noun-h.txt 20 0 None 0.000 402.58
+missing key: والولايات
+Arelations/noun-w-noun.txt 21 0 0.000 None 60.932 463.51
+Arelations/noun-w-noun.txt 21 0 None 0.000 463.51
+Arelations/verb-she-hes.txt 33 27 0.126 0.189 172.406 635.92
+Arelations/verb-she-hes.txt 33 12 0.530 0.000 635.92
+missing key: استخدمها
+missing key: أحدثها
+missing key: وصفها
+missing key: ذكرها
+missing key: يجعلها
+missing key: يحدها
+missing key: يستخدمها
+missing key: يسكنها
+missing key: يمثلها
+missing key: يقودها
+missing key: يقدمها
+missing key: يديرها
+missing key: يملكها
+missing key: يقطنها
+missing key: يرأسها
+missing key: يتبعها
+missing key: يحكمها
+missing key: يعرفها
+Arelations/verb-verb-hA.txt 19 0 0.000 None 0.001 635.92
+Arelations/verb-verb-hA.txt 19 0 None 0.000 635.92
+missing key: يستخدمه
+missing key: يصفه
+missing key: يذكره
+missing key: ينشره
+missing key: يجعله
+missing key: يحده
+missing key: يمثله
+missing key: يقوده
+missing key: يقدمه
+missing key: يديره
+missing key: يملكه
+missing key: يقطنه
+missing key: يرأسه
+missing key: يتبعه
+missing key: يحكمه
+Arelations/verb-verb-h.txt 18 0 0.000 None 0.980 636.90
+Arelations/verb-verb-h.txt 18 0 None 0.000 636.90
+missing key: يعتبره
+missing key: يعتبرها
+missing key: يعنيه
+missing key: يعنيها
+missing key: يأتيها
+missing key: ينتجها
+missing key: يريدها
+missing key: يحتاجها
+missing key: يعطيها
+missing key: يساعده
+missing key: يساعدها
+missing key: يأخذه
+missing key: يأخذها
+missing key: يجده
+missing key: يجدها
+missing key: يمتلكه
+missing key: يمتلكها
+missing key: يمنعها
+missing key: يربطه
+missing key: يربطها
+missing key: يضعه
+missing key: يضعها
+missing key: يشغلها
+missing key: يحبه
+missing key: يحبها
+missing key: يدعمه
+missing key: يدعمها
+missing key: يدفعه
+missing key: يدفعها
+missing key: يمارسه
+missing key: يمارسها
+missing key: يرتديها
+missing key: يمنحه
+missing key: يمنحها
+missing key: يسميه
+missing key: يسميها
+missing key: يخبره
+missing key: يخبرها
+missing key: يعلوه
+missing key: يعلوها
+Arelations/vheher-vhehim.txt 28 0 0.000 None 0.002 636.90
+Arelations/vheher-vhehim.txt 28 0 None 0.000 636.90
+missing key: تستخدمها
+missing key: تعتبرها
+missing key: تعنيها
+missing key: تأتيها
+missing key: تنتجها
+missing key: تريدها
+missing key: تعطيها
+missing key: تساعدها
+missing key: تأخذها
+missing key: تجدها
+missing key: تمتلكها
+missing key: تضعها
+missing key: تشغلها
+missing key: تحبها
+missing key: تدعمها
+missing key: تقودها
+missing key: تدفعها
+missing key: تمارسها
+missing key: تفعلها
+missing key: يفعلها
+missing key: يواجهها
+missing key: ترتديها
+missing key: تسميها
+missing key: تخبرها
+Arelations/vheher-vsheher.txt 25 0 0.000 None 0.002 636.91
+Arelations/vheher-vsheher.txt 25 0 None 0.000 636.91
+missing key: تستخدمه
+missing key: تعتبره
+missing key: تلعبه
+missing key: تريده
+missing key: تأخذه
+missing key: تجده
+missing key: تمتلكه
+missing key: تضعه
+missing key: تحبه
+missing key: تدعمه
+missing key: تقوده
+missing key: تدفعه
+missing key: تمارسه
+missing key: تفعله
+missing key: تواجهه
+missing key: تمنحه
+missing key: تديره
+missing key: تسميه
+Arelations/vheher-vshehim.txt 23 0 0.000 None 0.002 636.91
+Arelations/vheher-vshehim.txt 23 0 None 0.000 636.91
+missing key: يحتويها
+Arelations/vheher-vshe.txt 23 0 0.000 None 0.001 636.91
+Arelations/vheher-vshe.txt 23 0 None 0.000 636.91
+missing key: يلعبه
+missing key: تحتويها
+missing key: تجعلها
+missing key: تمنعها
+missing key: تربطها
+missing key: يفعله
+missing key: يواجهه
+missing key: تمنحها
+missing key: تديرها
+missing key: تتوسطها
+missing key: يتوسطه
+missing key: تعلوها
+Arelations/vhehim-vsheher.txt 33 0 0.000 None 0.002 636.91
+Arelations/vhehim-vsheher.txt 33 0 None 0.000 636.91
+missing key: تساعده
+missing key: تتوسطه
+missing key: تخبره
+Arelations/vhehim-vshehim.txt 25 0 0.000 None 4.718 641.63
+Arelations/vhehim-vshehim.txt 25 0 None 0.000 641.63
+Arelations/vhehim-vshe.txt 28 5 0.009 0.350 11.622 653.25
+Arelations/vhehim-vshe.txt 28 0 None 0.000 653.25
+Arelations/vhe-vheher.txt 25 0 0.000 None 0.001 653.25
+Arelations/vhe-vheher.txt 25 0 None 0.000 653.25
+Arelations/vhe-vhehim.txt 23 0 0.000 None 6.912 660.17
+Arelations/vhe-vhehim.txt 23 0 None 0.000 660.17
+Arelations/vhe-vsheher.txt 26 0 0.000 None 0.341 660.51
+Arelations/vhe-vsheher.txt 26 0 None 0.000 660.51
+Arelations/vhe-vshehim.txt 23 0 0.000 None 3.062 663.57
+Arelations/vhe-vshehim.txt 23 0 None 0.000 663.57
+Arelations/vhe-vshe.txt 28 27 0.217 0.234 119.641 783.21
+Arelations/vhe-vshe.txt 28 18 0.428 0.000 783.21
+missing key: تعنيه
+missing key: تجعله
+missing key: تربطه
+missing key: تعلوه
+Arelations/vsheher-vshehim.txt 28 0 0.000 None 0.002 783.21
+Arelations/vsheher-vshehim.txt 28 0 None 0.000 783.21
+Arelations/vshe-vsheher.txt 23 0 0.000 None 0.980 784.19
+Arelations/vshe-vsheher.txt 23 0 None 0.000 784.19
+Arelations/vshe-vshehim.txt 23 0 0.000 None 4.545 788.74
+Arelations/vshe-vshehim.txt 23 0 None 0.000 788.74
+
+
+Arabic, Zahran embedding, Language =3
+start 2021-04-13 17:13:36  accn: 1 holdout: 1 lPr: 0.25 preNorm: True successful: 1 doPCA: True Pinned: 96
+binaryZahran.w2v.bin  loaded 6.620 6.62
+Arelations/iswas.txt 20 5 0.011 0.200 10.136 16.76
+Arelations/iswas.txt 20 0 None 0.000 16.76
+missing key: تالى
+Arelations/noun-bil-noun.txt 20 3 0.005 0.333 9.324 26.08
+Arelations/noun-bil-noun.txt 20 0 None 0.000 26.08
+missing key: بتالى
+missing key: بمغرب
+Arelations/noun-b-noun.txt 20 4 0.008 0.250 8.224 34.30
+Arelations/noun-b-noun.txt 20 0 None 0.000 34.30
+missing key: بضافه
+Arelations/noun-b-noun.txt~ 20 4 0.008 0.250 7.400 41.70
+Arelations/noun-b-noun.txt~ 20 0 None 0.000 41.71
+Arelations/noun-definite.txt 29 3 0.004 0.500 20.179 61.88
+Arelations/noun-definite.txt 29 0 None 0.000 61.88
+Arelations/noun-hA-noun-h.txt 20 13 0.055 0.135 10.307 72.19
+Arelations/noun-hA-noun-h.txt 20 4 0.583 0.000 72.19
+Arelations/noun-mA.txt 20 0 0.000 None 10.125 82.32
+Arelations/noun-mA.txt 20 0 None 0.000 82.32
+Arelations/noun-noun-ha.txt 20 2 0.003 0.500 10.303 92.62
+Arelations/noun-noun-ha.txt 20 0 None 0.000 92.62
+Arelations/noun-noun-h.txt 20 0 0.000 None 10.043 102.66
+Arelations/noun-noun-h.txt 20 0 None 0.000 102.66
+Arelations/noun-w-noun.txt 21 6 0.010 0.133 11.315 113.98
+Arelations/noun-w-noun.txt 21 0 None 0.000 113.98
+Arelations/verb-she-hes.txt 33 30 0.136 0.166 28.380 142.36
+Arelations/verb-she-hes.txt 33 13 0.558 0.000 142.36
+Arelations/verb-verb-hA.txt 19 10 0.026 0.100 9.175 151.53
+Arelations/verb-verb-hA.txt 19 0 None 0.000 151.53
+Arelations/verb-verb-h.txt 18 5 0.010 0.150 8.130 159.66
+Arelations/verb-verb-h.txt 18 0 None 0.000 159.66
+Arelations/vheher-vhehim.txt 28 20 0.037 0.074 20.140 179.80
+Arelations/vheher-vhehim.txt 28 0 None 0.000 179.80
+Arelations/vheher-vsheher.txt 25 21 0.197 0.281 16.275 196.08
+Arelations/vheher-vsheher.txt 25 13 0.558 0.000 196.08
+Arelations/vheher-vshehim.txt 23 18 0.099 0.163 13.747 209.83
+Arelations/vheher-vshehim.txt 23 8 0.446 0.000 209.83
+Arelations/vheher-vshe.txt 23 19 0.099 0.146 13.796 223.62
+Arelations/vheher-vshe.txt 23 6 0.533 0.000 223.62
+missing key: يتوسطه
+Arelations/vhehim-vsheher.txt 33 29 0.198 0.257 28.953 252.58
+Arelations/vhehim-vsheher.txt 33 22 0.385 0.001 252.58
+missing key: تتوسطه
+Arelations/vhehim-vshehim.txt 25 18 0.098 0.193 15.329 267.91
+Arelations/vhehim-vshehim.txt 25 8 0.607 0.000 267.91
+Arelations/vhehim-vshe.txt 28 24 0.161 0.221 21.628 289.53
+Arelations/vhehim-vshe.txt 28 14 0.467 0.000 289.53
+Arelations/vhe-vheher.txt 25 13 0.025 0.096 16.690 306.22
+Arelations/vhe-vheher.txt 25 0 None 0.000 306.22
+Arelations/vhe-vhehim.txt 23 14 0.020 0.055 13.671 319.89
+Arelations/vhe-vhehim.txt 23 0 None 0.000 319.90
+Arelations/vhe-vsheher.txt 26 17 0.038 0.092 18.781 338.68
+Arelations/vhe-vsheher.txt 26 2 0.500 0.000 338.68
+Arelations/vhe-vshehim.txt 23 15 0.047 0.114 13.860 352.54
+Arelations/vhe-vshehim.txt 23 3 0.667 0.000 352.54
+Arelations/vhe-vshe.txt 28 28 0.370 0.370 21.417 373.95
+Arelations/vhe-vshe.txt 28 24 0.489 0.001 373.95
+Arelations/vsheher-vshehim.txt 28 18 0.030 0.075 20.362 394.32
+Arelations/vsheher-vshehim.txt 28 0 None 0.000 394.32
+Arelations/vshe-vsheher.txt 23 4 0.004 0.167 13.965 408.28
+Arelations/vshe-vsheher.txt 23 0 None 0.000 408.28
+Arelations/vshe-vshehim.txt 23 11 0.018 0.082 14.454 422.74
+Arelations/vshe-vshehim.txt 23 0 None 0.000 422.74
+

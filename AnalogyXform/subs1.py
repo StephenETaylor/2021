@@ -60,10 +60,15 @@ import numpy.random as npr
 import plotting
 import scipy.linalg as sl
 import time
+import vectorstuff as vs   #includes the adjust() function
 
-Language = 1 # English = 0, Arabic = 1
+def noAdjust(x):
+    return x
+
+Language = 2 # English = 0, Arabic = 1, Arabic with Zahran embedding = 2
 Eembedding = "English.w2v.bin"
 Aembedding = "Arabic.w2v.bin"
+A2embedding = "binaryZahran.w2v.bin"
 
 # some tested with parameters: 
 #   Holdout=1, accn=1, preNorm=doPCA=True, successful=1, lPr=0.25
@@ -123,18 +128,20 @@ Arelations  = [
                 "Arelations/vshe-vshehim.txt"
               ]
 
-embedding = [Eembedding, Aembedding][Language]
-relations = [Erelations, Arelations][Language]
+embedding = [Eembedding, Aembedding, A2embedding][Language]
+relations = [Erelations, Arelations, Arelations ][Language]
+Adjust =    [noAdjust,   noAdjust,   vs.adjust  ][Language]
 
 #parameters
-numRel = None #11
+numRel = 24 #None #11
+countRel = 1
 accn = 1
 holdout = 1
 lPr = 0.25 # fraction of analogies successful = (left_prod+right_prod)/nF
 preNorm = True
 successful = 1 #threshold for including pair in transform goal
 doPCA = True
-endEarly = True
+endEarly = False #True to just do preliminary statistics, possibly on many rels.
 
 # training related:
 LearningRate = 0.001
@@ -160,9 +167,16 @@ def main():
     # set up language model
     wordVectors = gm.KeyedVectors.load_word2vec_format(embedding, binary = True)
     dim = wordVectors.vectors.shape[1]
+    get_index_warnings = dict()
     def get_index(w):
         """ gensim 4 provides a get_index, but removes vocab dict """
-        return wordVectors.vocab[w].index
+        vocabObject = wordVectors.vocab.get(w,None)
+        if vocabObject is None: 
+            if get_index_warnings.get(w,None) is None:
+                get_index_warnings[w] = True
+                print('missing key:',w)
+            return None
+        return vocabObject.index
 
     vnorms = np.linalg.norm(wordVectors.vectors, axis = 1)
 
@@ -172,7 +186,7 @@ def main():
     if numRel is None:
         chacha = relations
     else:
-        chacha = relations[numRel:] #   numRel+1]
+        chacha = relations[numRel:numRel+countRel]
     for Fn in chacha:
         #print('relation', Fn)
         F = []
@@ -180,7 +194,7 @@ def main():
             for lin in fi: 
                 line = lin.strip().split()
                 if len(line) != 2: raise Exception("huh?")
-                F .append( (line[0],line[1]) )
+                F .append( (Adjust(line[0]),Adjust(line[1])) )
 
         nF = len(F)
         fstat = dict()
@@ -194,11 +208,18 @@ def main():
             for j,(r0,r1) in enumerate(F):
                 if i == j: continue # the identity analogy is too boring...
                 r1int = get_index(r1)
-                r1vec = wordVectors.vectors[r1int] /vnorms[r1int]
-
                 l1int = get_index(l1)
                 l0int = get_index(l0)
                 r0int = get_index(r0)
+                if (r1int is None or r0int is None or 
+                       l1int is None or l0int is None):
+                    # warning message already printed in get_index()
+                    fstat[(l0,l1,r0)] = False
+                    continue #skip this analogy
+
+
+                r1vec = wordVectors.vectors[r1int] /vnorms[r1int]
+
 
                 # should I normalize before adding vectors? or is afterward enough?
                 if preNorm:
@@ -235,9 +256,11 @@ def main():
         for i in useF:
             if i != 0:
                 usable += 1
-        sr2 = successes2 / usable / (usable-1)
-
-        print(Fn,nF, usable, F3f%sr1, F3f%sr2, time_check())
+        if usable > 1:
+            sr2 = successes2 / usable / (usable-1)
+            print(Fn,nF, usable, F3f%sr1, F3f%sr2, time_check())
+        else:
+            print(Fn,nF, usable, F3f%sr1, None, time_check())
 
 
         # review results and build the R+H relation
