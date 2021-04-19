@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset='UTF8'>
+</head>
 <body>
 
-<h1>My first PHP page</h1>
 
 <?php
-echo "Hello World2!<br/>";
-echo "line9<br/>";
-$f = opendir("..");
-$n = 5;
+echo "<br/>";
+
+$f = opendir(".");
+$n = 10;
 $m = 0;
 while ($m<$n){ 
-   print ($m);
    $e = readdir($f);
+   if ($e == ".." or $e == "." ){ $m = $m+1; continue; }
+   if ($e == "" ){ break; }
+   #print ($m);
+   echo "<a href='$e'>";
    print($e);
+   print("</a><br/>");
    $m = $m+1;
    }
-echo "<a href='george.htm'>george</a>";
 ?> 
 
 </body>
