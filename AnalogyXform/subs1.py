@@ -134,16 +134,18 @@ Arelations  = [
                 "Arelations/vshe-vsheher.txt",
                 "Arelations/vshe-vshehim.txt"
               ]
+A1relations = [Arelations[5]]  # not a great relation, but will run fast...
 A2relations = [Arelations[24]]
 A3relations = [Arelations[24]]
 A4relations = A3relations
 
-embeddingL = [Eembedding, Aembedding, A2embedding, A3embedding, A4embedding]
+embeddingL = [Eembedding, Aembedding,  A2embedding, A3embedding, A4embedding]
 relationsL = [Erelations, Arelations, A2relations, A3relations, A4relations ]
-AdjustL =    [noAdjust,   noAdjust,   vs.adjust  , noAdjust, noAdjust]
+AdjustL =    [noAdjust,   noAdjust,    vs.adjust  , noAdjust, noAdjust]
 
-def setup(Language):
-    global embedding, relations, Adjust
+def setup(language):
+    global embedding, relations, Adjust, Language
+    Language = language
     embedding = embeddingL[Language]
     relations = relationsL[Language]
     Adjust = AdjustL[Language]
@@ -309,10 +311,14 @@ def main():
         
         baseResults = [0]*4
         testResults = [0]*4
+        testResults2 = [0]*4  # I mean to accumulate sums of squares, but...
+        blades = 0
 
         # now set up Relations R and H, subsets of RpH
         for c in it.combinations(range(len(RpH)),holdout):
             # do jacknife; prepare statistics for each possibility  of holdout
+            blades +=1
+            shortsums = [0]*4
             R = []
             useR = [0]*(nF-holdout)
             ri = 0
@@ -441,6 +447,11 @@ def main():
                     offset = (i>=len(R))*1 + (j>=len(R))*2
                     baseResults[offset] += fstat[(l0,l1,r0)]*1
                     testResults[offset] += qgood*1
+                    shortsums[offset] += qgood*1
+
+            # here after processing one blade of jacknife relation
+            for i in range(4):
+                testResults2[i] += shortsums[i] ** 2
 
             print('Holdout:', c, 'testsofar', testResults, time_check())
 
@@ -452,9 +463,20 @@ def main():
             else:
                fin = '\t'
             if baseResults[i] == 0:
-                print(("%.3f/0"%testResults[i])+'/0', end =fin)
+                print((F3f%testResults[i])+'/0', end =fin)
             else:
-                print("%.3f"%(testResults[i]/baseResults[i]), end =fin)
+                print(F3f%(testResults[i]/baseResults[i]), end =fin)
+
+        # and now but overall mean, standard deviation.
+        sF = '('+F3f+')'
+        for i in range(4):
+            mean = testResults[i] / blades
+            variance = testResults2[i] /blades - mean*mean
+            stdev = math.sqrt(variance)
+            print(F3f % mean,sF%stdev, end='\t')
+        print()
+
+
                 
 
 

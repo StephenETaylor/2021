@@ -5,7 +5,7 @@
     A module to contain code to deal with vectors
     notice that the vectors are numpy.ndarray objects
 """
-import Bu
+#import Bu
 import sys
 import numpy as np
 import math
