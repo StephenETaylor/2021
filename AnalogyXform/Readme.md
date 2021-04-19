@@ -23,6 +23,10 @@ The description is:
 Fares, Murhaf; Kutuzov, Andrei; Oepen, Stephan & Velldal, Erik (2017). Word vectors, reuse, and replicability: Towards a community repository of large-text resources, In Jörg Tiedemann (ed.), Proceedings of the 21st Nordic Conference on Computational Linguistics, NoDaLiDa, 22-24 May 2017. Linköping University Electronic Press. ISBN 978-91-7685-601-7
 ]
 
+I also use a subset 150000 word subset of the Zahran embeddings,
+which seem now to have disappeared from sites.Google.com/site/MohaZahran
+
+
 The English relations files are the Google Analogy test set, 
     https://www.wikidata.org/wiki/Q32127146
 slightly rearranged into pairs (from quadruplets.)

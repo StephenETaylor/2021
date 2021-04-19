@@ -65,10 +65,17 @@ import vectorstuff as vs   #includes the adjust() function
 def noAdjust(x):
     return x
 
-Language = 2 # English = 0, Arabic = 1, Arabic with Zahran embedding = 2
+Language = 3 # English = 0, 
+             # NLPL Arabic = 1, 
+             # Arabic with Zahran embedding = 2
+             # AraVec twitter embedding = 3
+             # AraVec wiki embedding = 4
+
 Eembedding = "English.w2v.bin"
 Aembedding = "Arabic.w2v.bin"
 A2embedding = "binaryZahran.w2v.bin"
+A3embedding = "sda1/cb300_twitter.w2v.bin"
+A4embedding = "sda1/cb300_wiki.w2v.bin"
 
 # some tested with parameters: 
 #   Holdout=1, accn=1, preNorm=doPCA=True, successful=1, lPr=0.25
@@ -127,13 +134,24 @@ Arelations  = [
                 "Arelations/vshe-vsheher.txt",
                 "Arelations/vshe-vshehim.txt"
               ]
+A2relations = [Arelations[24]]
+A3relations = [Arelations[24]]
+A4relations = A3relations
 
-embedding = [Eembedding, Aembedding, A2embedding][Language]
-relations = [Erelations, Arelations, Arelations ][Language]
-Adjust =    [noAdjust,   noAdjust,   vs.adjust  ][Language]
+embeddingL = [Eembedding, Aembedding, A2embedding, A3embedding, A4embedding]
+relationsL = [Erelations, Arelations, A2relations, A3relations, A4relations ]
+AdjustL =    [noAdjust,   noAdjust,   vs.adjust  , noAdjust, noAdjust]
+
+def setup(Language):
+    global embedding, relations, Adjust
+    embedding = embeddingL[Language]
+    relations = relationsL[Language]
+    Adjust = AdjustL[Language]
+
+setup(Language)
 
 #parameters
-numRel = 24 #None #11
+numRel =  24 #None #11
 countRel = 1
 accn = 1
 holdout = 1
@@ -157,7 +175,7 @@ def main():
     """
         main is guided by the global parameters, none of which is changed
     """
-    if numRel is None:
+    if numRel is None or numRel > len(relations):
         chacha = ''
     else:
         chacha = 'relation '+relations[numRel]
@@ -180,10 +198,10 @@ def main():
 
     vnorms = np.linalg.norm(wordVectors.vectors, axis = 1)
 
-    print(embedding, ' loaded',time_check(),flush = True)
+    print(embedding, ' loaded:', wordVectors.vectors.shape ,time_check(),flush = True)
 
     # read in the relation
-    if numRel is None:
+    if numRel is None or numRel > len(relations):
         chacha = relations
     else:
         chacha = relations[numRel:numRel+countRel]
@@ -498,7 +516,10 @@ def train(diffvec,nrel,target):
     oldgoal = None
     # initialize C in (-1,1).  Too broad?  Parameter?
     # a little tough to get the dtype and shape arguments to work...
-    C = 2*np.reshape(npr.random_sample(300*Cwidth).astype(np.float32),(300,Cwidth)) - 1
+    dim1 = diffvec.shape[1]  # widths of input vectors
+    dim2 = target.shape[1]   # and also output vectors
+    ifactor = 0.1  #largest absolute value in the initial C array
+    C = ifactor*2*np.reshape(npr.random_sample(dim1*dim2).astype(np.float32),(dim1,dim2)) - 1*ifactor
     for shebang in range(Iterations):
         #E = np.ones(shape = (nrel,Cwidth, dtype=np.float32)
         E = diffvec@C  # matrix multiplication (works!)
