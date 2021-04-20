@@ -134,6 +134,11 @@ Arelations  = [
                 "Arelations/vshe-vsheher.txt",
                 "Arelations/vshe-vshehim.txt"
               ]
+        
+# relations that look somewhat promising.
+A0relations = [ Arelations[5], Arelations[10], Arelations[14], Arelations[17],
+        Arelations[20], Arelations[24] ]
+
 A1relations = [Arelations[5]]  # not a great relation, but will run fast...
 A2relations = [Arelations[24]]
 A3relations = [Arelations[24]]
@@ -164,6 +169,8 @@ doPCA = True
 endEarly = False #True to just do preliminary statistics, possibly on many rels.
 
 # training related:
+TrainDictVer = 0   # how to set up positive cases for training
+NoisyTraining = True
 LearningRate = 0.001
 Iterations = 3001
 Regularization = 0.99
@@ -183,7 +190,7 @@ def main():
         chacha = 'relation '+relations[numRel]
     print( time_check(), chacha, 'accn:', accn , 'holdout:', 
     holdout , 'lPr:', lPr , 'preNorm:', preNorm , 'successful:', successful , 
-    'doPCA:', doPCA , 'Pinned:', Pinned)
+    'doPCA:', doPCA , 'Pinned:', Pinned, 'TrainDictVer', TrainDictVer)
     # set up language model
     wordVectors = gm.KeyedVectors.load_word2vec_format(embedding, binary = True)
     dim = wordVectors.vectors.shape[1]
@@ -348,8 +355,7 @@ def main():
             for i in range(len(R)):
                 if useR[i] >= successful:
                     xX.append(i)
-            dX = np.ndarray((len(xX)+Pinned,dim),dtype=np.float32)
-            dY = np.ndarray((len(xX)+Pinned,dim),dtype=np.float32)
+
             pcaD = np.ndarray((2*len(xX),dim),dtype=np.float32)
             
             #set up for PCA
@@ -374,27 +380,46 @@ def main():
                 mnorms = vnorms
             
             # now build transform
-            for oi,i in enumerate(xX):
-                v1int = get_index(R[i][1])
-                v0int = get_index(R[i][0])
-                v1vec = wordVectors.vectors[v1int]
-                v0vec = wordVectors.vectors[v0int]
+            if TrainDictVer == 0:
+                dX = np.ndarray((len(xX)+Pinned,dim),dtype=np.float32)
+                dY = np.ndarray((len(xX)+Pinned,dim),dtype=np.float32)
+                for oi,i in enumerate(xX):
+                    v1int = get_index(R[i][1])
+                    v0int = get_index(R[i][0])
+                    v1vec = wordVectors.vectors[v1int]
+                    v0vec = wordVectors.vectors[v0int]
 
 
-                if preNorm:
-                    v1vec = v1vec / vnorms[v1int]
-                    v0vec = v0vec / vnorms[v0int]
-                else:
-                    v1vec = v1vec
-                    v0vec = v0vec
+                    if preNorm:
+                        v1vec = v1vec / vnorms[v1int]
+                        v0vec = v0vec / vnorms[v0int]
+                    else:
+                        v1vec = v1vec
+                        v0vec = v0vec
 
-                if doPCA:
-                    v1vec = v1vec @ PCA
-                    v0vec = v0vec @ PCA
+                    if doPCA:
+                        v1vec = v1vec @ PCA
+                        v0vec = v0vec @ PCA
 
-                dX[oi] = v1vec - v0vec
+                    dX[oi] = v1vec - v0vec
 
-            dY[:len(xX),:] = np.mean(dX[:len(xX),:], axis=0)
+                dY[:len(xX),:] = np.mean(dX[:len(xX),:], axis=0)
+
+            elif TrainDictVer == 1:
+                # this scheme has many more positive cases.
+                lxx = len(xX)
+                dxLen = Pinned + (lxx-1)*lxx
+                dX = np.ndarray((dxLen, dim),dtype=np.float32)
+                dY = np.ndarray((dxLen, dim),dtype=np.float32)
+                for i,(l0,l1) in xX:
+                    for j,(r0,r1) in xX:
+                        if i==j: continue
+                        index = i*len(xX-1)+j
+                        dX[index] = l1 - l0
+                        dY[index] = r1 - r0
+
+            elif TrainDictVer == 2:
+                pass
 
             bpin = len(xX)
             for i in range(bpin,bpin+Pinned): 
@@ -409,7 +434,7 @@ def main():
                 dX[i] = dY[i] = vec
 
             # train a linear transform for this relation
-            C = train( dX, dX.shape[0], dY)
+            C = train( dX, dX.shape[0], dY, NoisyTraining)
 
             mvectors = mvectors @ C
             mnorms = np.linalg.norm(mvectors,axis = 1)
@@ -521,7 +546,7 @@ def cosine_vecs(v1,v2):
     return prod
 
 
-def train(diffvec,nrel,target):
+def train(diffvec,nrel,target, noisy=False):
     """
         parameter diffvec is an array of difference vectors
         nrel is number of vector inthe array
@@ -554,7 +579,8 @@ def train(diffvec,nrel,target):
             Q = t*t # this is elementwise, so Q[i][j] = (1-E[i][j])**2
             sss = np.sum(Q)
             mss = np.mean(Q)
-            print('goal:', sss , mss ,C[0][0], shebang, a)
+            if noisy:
+                print('goal:', sss , mss ,C[0][0], shebang, a)
             # added adjustment to learning rate 7.4.2021
             if oldgoal is not None and oldgoal-sss >= 0 and abs(oldgoal-sss) < a/max(C.size,Q.size):
                 a = a/2
