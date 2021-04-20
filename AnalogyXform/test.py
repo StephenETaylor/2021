@@ -9,8 +9,8 @@ for l in [2]:
     s1.NoisyTraining = False
     
     s1.setup(l)
-    s1.relations = s1.A1relations  
-    for p in range(11):
+    s1.relations = s1.A2relations  
+    for p in [0, 1, 9, 10, 11]:
         s1.Pinned = p*10
-        for i in range(10):
+        for i in range(20):
             s1.main()
