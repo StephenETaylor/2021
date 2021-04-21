@@ -1,0 +1,35 @@
+The following are different tabs for results in the tables:
+	5k-Results-fasttext-skipgram-near-bin-cosine-cca-java
+	5k-Results-fasttext-cbow-near-bin-cosine-cca-java
+	Results-fasttext-skipgram-near-bin-cosine-cca-java
+	Results-fasttext-cbow-near-bin-cosine-cca-java
+	Results-w2v-skipgram-near-bin-cosine-cca-java
+	Results-w2v-cbow-near-bin-cosine-cca-java
+	Results-fasttext-skipgram-near-bin-arcos-cca-java
+	Results-fasttext-cbow-near-bin-arcos-cca-java
+	Results-w2v-skipgram-near-bin-arcos-cca-java
+	Results-w2v-cbow-near-bin-arcos-cca-java
+
+
+5k-Results-fasttext-skipgram-near-bin-cosine-cca-java
+ 
+     binary threshold, nearest neighbor
+       REVERSE:false,  true
+	 embeddingsize 25-300 by 25
+     
+	2*2*12 = 48 parameter configurations
+	7 leading caption lines.
+	15 lines per 10-run parameter set
+        last interesting line at 734
+
+
+
+5k-Results-fasttext-cbow-near-bin-cosine-cca-java
+Results-fasttext-skipgram-near-bin-cosine-cca-java
+Results-fasttext-cbow-near-bin-cosine-cca-java
+Results-w2v-skipgram-near-bin-cosine-cca-java
+Results-w2v-cbow-near-bin-cosine-cca-java
+Results-fasttext-skipgram-near-bin-arcos-cca-java
+Results-fasttext-cbow-near-bin-arcos-cca-java
+Results-w2v-skipgram-near-bin-arcos-cca-java
+Results-w2v-cbow-near-bin-arcos-cca-java
