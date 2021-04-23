@@ -22,7 +22,8 @@
               where each of the {binary, rank} stats is two entries,
               a y-value and a y-delta
     Such file can be plotted in gnuplut with (for example)
-       plot 'Results-w2v-cbow-Bi-Fo-cca-java' using ($1):($2)($3) with errorbars
+       plot 'Results-w2v-cbow-Bi-Fo-cca-java.dat' using 1:2:3 with errorbars,\
+              '' using 1:16:17 with errorbars
 """
 import sys
 
@@ -75,35 +76,54 @@ def main():
         #   {Ne-Fo, Ne-Re, Bi-Fo, Bi-Re}
         of = [[],[],[],[]]
 
-        for seg in range(7,len(table),15):
+        columnA = column('A')
+        seg = 7
+        while seg < len(table):
+            # is this actually the beginning of a segment?
+            if ( table[seg][columnA] is  None or 
+                     type(table[seg][columnA]) is not type('') or
+                      'repeat-1' != table[seg][columnA][:8]  ):
+                seg += 1
+                continue
             # set up params for this segment:
-            if table[seg][column('AC')] == 'FALSE': # REVERSE-EMBEDDING
+            if table[seg][column('J')] == '0': # REVERSE-EMBEDDING FALSE
                 of_set = 0
             else: of_set = 1
 
-            if table[seg][column('O')] == 'FALSE':  # USE BIN THLD
+            if table[seg][column('O')] == '0':  # USE BIN THLD FALSE
                 of_set += 0
             else: of_set += 2
 
             emb_dim = table[seg][column('L')]
+
+            # find the three summaries lines (may not be exactly ten runs)
+            # summaries are all lines without "repeat" at the beginning
+            # could instead make sure that params for runs matched...
+            while (seg < len(table) and
+                    table[seg][columnA] is not None and 
+                     type(table[seg][columnA]) is type('') and
+                      'repeat' == table[seg][columnA][:6]  ):
+                seg += 1
+
             oline = [ None ] * 29
             oline[0] = emb_dim
             ou = 1
             for p in [column('C'),column('U')]:
                 for i in range(p,p+7):
-                    oline[ou] = table[seg+10][p]
-                    oline[ou+1] = table[seg+12][p]
-                    ou += 2
+                    oline[ou] = table[seg][p+i]    #average
+                    ou += 1
+                    oline[ou] = table[seg+2][p+i]#confidence range
+                    ou += 1
             of[of_set].append(oline)
 
         # now write out the four files.
         for f in range(4):
             if len(of[f]) == 0: continue
             PARMS = ['Ne-Fo', 'Ne-Re', 'Bi-Fo', 'Bi-Re'][f] 
-            fn = '-'.join([NNN,EMB,EMBSUB,PARM,XFORM,JAVA])+'.dat'
+            fn = '-'.join([NNN,EMB,EMBSUB,PARMS,XFORM,JAVA])+'.dat'
             with open(fn,'w') as fo:
                 for line in of[f]:
-                    print(' ',join(line),file=fo)
+                    print(' '.join(line),file=fo)
 
 
 
@@ -139,6 +159,8 @@ def split_sv_line(lin, delimiter='\t', text_wrap='"'):
             if ch == text_wrap:
                 line.append(field)
                 state = 2
+            else:
+                field += ch
 
         elif state == 2: #finished wrapping text, insist on delimiter
             if ch == delimiter:
