@@ -25,6 +25,7 @@
        plot 'Results-w2v-cbow-Bi-Fo-cca-java.dat' using 1:2:3 with errorbars,\
               '' using 1:16:17 with errorbars
 """
+import pdb
 import sys
 
 def main():
@@ -85,16 +86,32 @@ def main():
                       'repeat-1' != table[seg][columnA][:8]  ):
                 seg += 1
                 continue
-            # set up params for this segment:
-            if table[seg][column('J')] == '0': # REVERSE-EMBEDDING FALSE
-                of_set = 0
-            else: of_set = 1
 
-            if table[seg][column('O')] == '0':  # USE BIN THLD FALSE
+            # set up params for this segment:
+            ref = table[seg][column('J')] 
+            if ref == '0' or ref == 'FALSE': # REVERSE-EMBEDDING FALSE
+                of_set = 0
+            elif ref == '1' or ref == 'TRUE':
+                of_set = 1
+            else: 
+                seg += 1
+                continue
+
+            btf =  table[seg][column('O')] 
+            if btf == '0' or btf == 'FALSE':  # USE BIN THLD FALSE
                 of_set += 0
-            else: of_set += 2
+            elif btf == '1' or btf == 'TRUE':
+                of_set += 2
+            else: 
+                seg += 1
+                continue
 
             emb_dim = table[seg][column('L')]
+
+            #insist on parameters which are at least not total junk
+            if emb_dim is None: 
+                seg += 1
+                continue
 
             # find the three summaries lines (may not be exactly ten runs)
             # summaries are all lines without "repeat" at the beginning
@@ -105,25 +122,31 @@ def main():
                       'repeat' == table[seg][columnA][:6]  ):
                 seg += 1
 
-            oline = [ None ] * 29
+            oline = [ None ] * 25
             oline[0] = emb_dim
             ou = 1
-            for p in [column('C'),column('U')]:
-                for i in range(7):
+            for p,r in [(column('C'),7),(column('U'),5)]:
+                for i in range(r):
                     oline[ou] = table[seg][p+i]    #average
                     ou += 1
                     oline[ou] = table[seg+2][p+i]#confidence range
                     ou += 1
-            of[of_set].append(oline)
+            xx = ' '.join(oline)
+            of[of_set].append(xx)
 
         # now write out the four files.
         for f in range(4):
             if len(of[f]) == 0: continue
             PARMS = ['Ne-Fo', 'Ne-Re', 'Bi-Fo', 'Bi-Re'][f] 
-            fn = '-'.join([NNN,EMB,EMBSUB,PARMS,XFORM,JAVA])+'.dat'
-            with open(fn,'w') as fo:
-                for line in of[f]:
-                    print(' '.join(line),file=fo)
+            ofn = '-'.join([NNN,EMB,EMBSUB,PARMS,XFORM,JAVA])+'.dat'
+            with open(ofn,'w') as fo:
+                #fo.write('#\n')
+                #for line in of[f]:
+                for i,line in enumerate(of[f]):
+                    #print(xx,file=fo)
+                    if line == None:
+                        print(i)
+                    fo.write(line+'\n')
 
 
 
