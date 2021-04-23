@@ -109,7 +109,7 @@ def main():
             oline[0] = emb_dim
             ou = 1
             for p in [column('C'),column('U')]:
-                for i in range(p,p+7):
+                for i in range(7):
                     oline[ou] = table[seg][p+i]    #average
                     ou += 1
                     oline[ou] = table[seg+2][p+i]#confidence range
