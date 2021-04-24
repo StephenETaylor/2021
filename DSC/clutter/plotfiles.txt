@@ -1,0 +1,16 @@
+5k-Results-fasttext-cbow-cosine-cca-java
+Only binary threshold, no nearest neighbors.
+
+Reverse only for 50, 75, 250
+Forward only for 25, 50, 75, 100, 150; still trending upward at 150, for the ranking task, not so much for binary.
+
+
+5k-Results-fasttext-skipgram-cosine-cca-java
+Results-fasttext-cbow-arcos-cca-java
+Results-fasttext-cbow-cosine-cca-java
+Results-fasttext-skipgram-arcos-cca-java
+Results-fasttext-skipgram-cosine-cca-java
+Results-w2v-cbow-arcos-cca-java
+Results-w2v-cbow-cosine-cca-java
+Results-w2v-skipgram-arcos-cca-java
+Results-w2v-skipgram-cosine-cca-java
