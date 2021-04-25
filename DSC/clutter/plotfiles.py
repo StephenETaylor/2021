@@ -1,3 +1,24 @@
+#!/usr/bin/env python3
+"""
+    this program builds an html file, report .htm, by
+    combining a bunch of .dat files (each corresponding to a series of runs
+    with some set of parameters) and building a script for 
+    gnuplot to turn the .dat files into .png graphs.
+    It also adds commentary from plotfiles.txt, which is hand-edited 
+    to each series of experiments.
+
+    There are no parameters, but the complete list of datafiles,
+    which controls the organization, is built into the program,
+    so the program has to be edited to change the datafile list if any
+    of the experiments change.
+
+    A more versatile strategy would be to read the names of all the files
+    in the directory, and sort them into related groups.   That would be
+    easier to do, if I hadn't stuck the Bi-Fo/Bi-Re/Ne-Fo/Ne-Re into
+    the middle of the filename.  If it were right before .dat, a simple sort 
+    would group things correctly...
+"""
+
 files = [
 ['5k-Results-fasttext-cbow-Bi-Fo-cosine-cca-java.dat'],
 

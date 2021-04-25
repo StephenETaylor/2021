@@ -22,3 +22,25 @@ Results-w2v-cbow-arcos-cca-java
 Results-w2v-cbow-cosine-cca-java
 Results-w2v-skipgram-arcos-cca-java
 Results-w2v-skipgram-cosine-cca-java
+
+<par>SUMMARY. The skipgram statistics seem to generally decline for embedding 
+dimension greater than 150, whereas the effect isn't so marked for CBOW.
+(CBOW scores are a little lower.)
+But the errorbars are pretty wide, so it's hard to trust tendencies.   
+(I used your confidence interval for the errorbars.  
+Increasing the number of runs would narrow the confidence interval, I think.)
+
+<par>
+One way to increase the number of runs for the same effort would be to use
+a single embedding for several different runs, for example
+one embedding could be used for: both Reverse and Forward runs, both Nearest Neighbor and Binary threshold, cosine and arcos -- that's eight runs for one 
+embedding; and building the embedding is much more expensive than the
+comparisons.
+
+<par>
+You collected the statistics, but I didn't graph individual languages 
+for Reverse embeddings.   It seems likely that there is a relationship
+between corpus sizes and when Reverse embeddings give better scores, but 
+maybe our small number of corpus sizes won't let us tease it out.  However,
+we could artificially limit the size of the German corpus, which is pretty
+big, and see if we could learn anything.
