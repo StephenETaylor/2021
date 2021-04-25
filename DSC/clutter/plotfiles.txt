@@ -1,12 +1,20 @@
 5k-Results-fasttext-cbow-cosine-cca-java
+Only binary threshold, no nearest neighbors.  No reverse.
+values only for 25 and 50.
+
+5k-Results-fasttext-skipgram-cosine-cca-java
 Only binary threshold, no nearest neighbors.
 
 Reverse only for 50, 75, 250
 Forward only for 25, 50, 75, 100, 150; still trending upward at 150, for the ranking task, not so much for binary.
 
 
-5k-Results-fasttext-skipgram-cosine-cca-java
 Results-fasttext-cbow-arcos-cca-java
+Since Binary Threshold and Nearest Neighbor strategies apply only to binary 
+task, not to ranking task, it isn't very surprising that the Bi-Fo and Ne-Fo
+runs have similar results for the ranking task; likewise for Bi-Re and Ne-Re.
+
+For the binary task, nearest neighbors is better for fasttext-cbow-arcos
 Results-fasttext-cbow-cosine-cca-java
 Results-fasttext-skipgram-arcos-cca-java
 Results-fasttext-skipgram-cosine-cca-java

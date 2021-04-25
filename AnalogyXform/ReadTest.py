@@ -19,8 +19,20 @@ def main():
     means = [0]*4
     sigmas = [0]*4
 
-    for lin in sys.stdin:
+    if len(sys.argv) > 0:
+        inpfil = open(sys.argv[1])
+    else: 
+        inpfil = sys.stdin
+    
+    prefile = True
+    for lin in inpfil:
+        if lin[:5] == '*****': break
         line = lin.strip().split()
+        if len(line) == 0: continue
+        
+        if prefile and line[0] != 'start': continue
+        prefile = False
+
         #p = line.find('Pinned:')
         p = -1
         for i,x in enumerate(line):
@@ -30,7 +42,7 @@ def main():
         if p > -1:
             pinned = line[p+1]
             continue
-        elif line[1] == 'loaded:':
+        elif len(lin)>1 and line[1] == 'loaded:':
             embedding = line[0]
         elif line[0] == 'pca':
             pass

@@ -16,7 +16,7 @@
     independent variable.
     Each of the 4 covers one of the combinations of 
         ({near,bin},{forward,reverse}) = parms = {Ne-Fo, Ne-Re, Bi-Fo, Bi-Re}
-        and is named NNN-EMB-EMBSUB-PARM-XFORM-JAVA.dat
+        and is named NNN-EMB-EMBSUB-PARM-SIM-XFORM-JAVA.dat
         each line of each dat file includes:
            embeddingSize 7x <binary stats>  7x <rank stats>
               where each of the {binary, rank} stats is two entries,
@@ -138,7 +138,7 @@ def main():
         for f in range(4):
             if len(of[f]) == 0: continue
             PARMS = ['Ne-Fo', 'Ne-Re', 'Bi-Fo', 'Bi-Re'][f] 
-            ofn = '-'.join([NNN,EMB,EMBSUB,PARMS,XFORM,JAVA])+'.dat'
+            ofn = '-'.join([NNN,EMB,EMBSUB,PARMS,SIM,XFORM,JAVA])+'.dat'
             with open(ofn,'w') as fo:
                 #fo.write('#\n')
                 #for line in of[f]:

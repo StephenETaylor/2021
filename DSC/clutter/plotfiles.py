@@ -1,24 +1,50 @@
 files = [
-['5k-Results-fasttext-cbow-Bi-Fo-cca-java.dat'
-,'5k-Results-fasttext-cbow-Bi-Re-cca-java.dat'],[
-'5k-Results-fasttext-skipgram-Bi-Fo-cca-java.dat'
-,'5k-Results-fasttext-skipgram-Bi-Re-cca-java.dat'],[
-'Results-fasttext-cbow-Bi-Fo-cca-java.dat'
-,'Results-fasttext-cbow-Bi-Re-cca-java.dat'
-,'Results-fasttext-cbow-Ne-Fo-cca-java.dat'
-,'Results-fasttext-cbow-Ne-Re-cca-java.dat'],[
-'Results-fasttext-skipgram-Bi-Fo-cca-java.dat'
-,'Results-fasttext-skipgram-Bi-Re-cca-java.dat'
-,'Results-fasttext-skipgram-Ne-Fo-cca-java.dat'
-,'Results-fasttext-skipgram-Ne-Re-cca-java.dat'],[
-'Results-w2v-cbow-Bi-Fo-cca-java.dat'
-,'Results-w2v-cbow-Bi-Re-cca-java.dat'
-,'Results-w2v-cbow-Ne-Fo-cca-java.dat'
-,'Results-w2v-cbow-Ne-Re-cca-java.dat'],[
-'Results-w2v-skipgram-Bi-Fo-cca-java.dat'
-,'Results-w2v-skipgram-Bi-Re-cca-java.dat'
-,'Results-w2v-skipgram-Ne-Fo-cca-java.dat'
-,'Results-w2v-skipgram-Ne-Re-cca-java.dat']]
+['5k-Results-fasttext-cbow-Bi-Fo-cosine-cca-java.dat'],
+
+['5k-Results-fasttext-skipgram-Bi-Fo-cosine-cca-java.dat',
+'5k-Results-fasttext-skipgram-Bi-Re-cosine-cca-java.dat'],
+
+['Results-fasttext-cbow-Bi-Fo-arcos-cca-java.dat',
+'Results-fasttext-cbow-Bi-Re-arcos-cca-java.dat',
+'Results-fasttext-cbow-Ne-Fo-arcos-cca-java.dat',
+'Results-fasttext-cbow-Ne-Re-arcos-cca-java.dat'],
+
+['Results-fasttext-cbow-Bi-Fo-cosine-cca-java.dat',
+'Results-fasttext-cbow-Bi-Re-cosine-cca-java.dat',
+'Results-fasttext-cbow-Ne-Fo-cosine-cca-java.dat',
+'Results-fasttext-cbow-Ne-Re-cosine-cca-java.dat'],
+
+['Results-fasttext-skipgram-Bi-Fo-arcos-cca-java.dat',
+'Results-fasttext-skipgram-Bi-Re-arcos-cca-java.dat',
+'Results-fasttext-skipgram-Ne-Fo-arcos-cca-java.dat',
+'Results-fasttext-skipgram-Ne-Re-arcos-cca-java.dat'],
+
+['Results-fasttext-skipgram-Bi-Fo-cosine-cca-java.dat',
+'Results-fasttext-skipgram-Bi-Re-cosine-cca-java.dat',
+'Results-fasttext-skipgram-Ne-Fo-cosine-cca-java.dat',
+'Results-fasttext-skipgram-Ne-Re-cosine-cca-java.dat'],
+
+['Results-w2v-cbow-Bi-Fo-arcos-cca-java.dat',
+'Results-w2v-cbow-Bi-Re-arcos-cca-java.dat',
+'Results-w2v-cbow-Ne-Fo-arcos-cca-java.dat',
+'Results-w2v-cbow-Ne-Re-arcos-cca-java.dat'],
+
+['Results-w2v-cbow-Bi-Fo-cosine-cca-java.dat',
+'Results-w2v-cbow-Bi-Re-cosine-cca-java.dat',
+'Results-w2v-cbow-Ne-Fo-cosine-cca-java.dat',
+'Results-w2v-cbow-Ne-Re-cosine-cca-java.dat'],
+
+['Results-w2v-skipgram-Bi-Fo-arcos-cca-java.dat',
+'Results-w2v-skipgram-Bi-Re-arcos-cca-java.dat',
+'Results-w2v-skipgram-Ne-Fo-arcos-cca-java.dat',
+'Results-w2v-skipgram-Ne-Re-arcos-cca-java.dat'],
+
+['Results-w2v-skipgram-Bi-Fo-cosine-cca-java.dat',
+'Results-w2v-skipgram-Bi-Re-cosine-cca-java.dat',
+'Results-w2v-skipgram-Ne-Fo-cosine-cca-java.dat',
+'Results-w2v-skipgram-Ne-Re-cosine-cca-java.dat']
+
+]
 
 def main():
     with open('plotfiles.txt') as fi:
@@ -84,10 +110,10 @@ def makeg(pname, flist, handle):
             handle.write(fna)
             if j==0:
                 handle.write(
-                  '" using 1:2:3 with errorbars, "" using 1:2:3 with lines')
+                  '" using 1:2:3 with errorlines')
             else:
                 handle.write(
-                  '" using 1:16:17 with errorbars, "" using 1:16:17 with lines')
+                  '" using 1:16:17 with errorlines')
         handle.write('\n')
         handle.write('\nset output\n')
         handle.write('set terminal pop\n')
