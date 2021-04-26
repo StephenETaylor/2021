@@ -14,8 +14,24 @@ Since Binary Threshold and Nearest Neighbor strategies apply only to binary
 task, not to ranking task, it isn't very surprising that the Bi-Fo and Ne-Fo
 runs have similar results for the ranking task; likewise for Bi-Re and Ne-Re.
 
-For the binary task, nearest neighbors is better for fasttext-cbow-arcos
+For the binary task, nearest neighbors is better for fasttext-cbow-arcos and fastext-cbow-cosine.   Perhaps it is because the rank scores are so poor?
+
+<par>
+The fasttext-cbow Rank results are consistently bad; they average about one-half the accuracy of the fasttext-skipgram results.
+Fasttext-skipgram (further down) seems to have results comparableto w2v-skipgram.  
+
+fasttext cbow has a peculiarity that the rank scores for the
+ smallest embedding are the best.  On two of eight runs, emb_dim = 50 slightly beats emb-dim = 25, but otherwise, emb_dim = 25 gives the best rank score.
+
 Results-fasttext-cbow-cosine-cca-java
+Note, as mentioned above: fasttext cbow has low rank scores,
+and Nearest Neighbors is a better binary classifier than
+Binary threshold.
+
+<par>Since arcos and cosine are monotonic functions of each other,
+the rank results for fasttext-cbow-arcos and fast-text-cbow-cosine
+should have the same distribution for Reversed comparisons,
+and similarly for forward comparisons.
 Results-fasttext-skipgram-arcos-cca-java
 Results-fasttext-skipgram-cosine-cca-java
 Results-w2v-cbow-arcos-cca-java
@@ -34,8 +50,7 @@ Increasing the number of runs would narrow the confidence interval, I think.)
 One way to increase the number of runs for the same effort would be to use
 a single embedding for several different runs, for example
 one embedding could be used for: both Reverse and Forward runs, both Nearest Neighbor and Binary threshold, cosine and arcos -- that's eight runs for one 
-embedding; and building the embedding is much more expensive than the
-comparisons.
+embedding; and building the embedding is much more expensive than the comparisons.
 
 <par>
 You collected the statistics, but I didn't graph individual languages 
@@ -44,3 +59,18 @@ between corpus sizes and when Reverse embeddings give better scores, but
 maybe our small number of corpus sizes won't let us tease it out.  However,
 we could artificially limit the size of the German corpus, which is pretty
 big, and see if we could learn anything.
+
+<par> <table> <tr>
+<td>Possible experiments
+<tr> <td> would more training epochs improve wide skipgram embeddings?
+<tr><td>There are non-overlapping confidence intervals for skipgram between Forward and Reverse mappings.  
+I'm going to break these down by language right now and see 
+if there's a pattern.
+If so, an experiment artificially reducing the size of one 
+corpus could discover a relationship between relative corpus
+size and reverse/forward mappings.  </table>
+
+end-of-file
+need a last key in the file, which never gets stored in dict!
+
+
