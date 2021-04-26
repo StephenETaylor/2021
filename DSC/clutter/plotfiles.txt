@@ -68,5 +68,9 @@ I'm going to break these down by language right now and see
 if there's a pattern.
 If so, an experiment artificially reducing the size of one 
 corpus could discover a relationship between relative corpus
-size and reverse/forward mappings.
+size and reverse/forward mappings.  </table>
+
+end-of-file
+need a last key in the file, which never gets stored in dict!
+
 
