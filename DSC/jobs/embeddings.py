@@ -60,7 +60,7 @@ def main():
 
                 zip_name = '-'.join([emb_dim, emb_name, str(i)])
                 g_f = '-'.join([emb_dim, emb_name])
-                params = "--write_zip_file %s --general_folder %s --num_workers 8 --num_repeat 1 --emb_type %s --emb_algorithm %s --emb_dim %s --transformation cca-java --compare_method cosine --use_nearest_neig -iter %s"%(zip_name, g_f, emb_typ, alg_typ, emb_dim, epochs)
+                params = "--write_zip_file %s.zip --general_folder %s --num_workers 8 --num_repeat 1 --emb_type %s --emb_algorithm %s --emb_dim %s --transformation cca-java --compare_method cosine --use_nearest_neig --iter %s"%(zip_name, g_f, emb_typ, alg_typ, emb_dim, epochs)
 
                 line = ' '.join([qsub, lsc, params])
                 print(line, file=fo)
