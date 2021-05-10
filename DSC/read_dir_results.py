@@ -22,9 +22,8 @@
     and output a plot file
 
 """
-import os
-import pathline as pl
-import sys
+import pathlist as pl
+#import sys
 
 EvaluationHeaders = '''Flags	Type	avg acc/rank	w/o Italian acc/rank	english	german	latin	swedish	italian	reverse emb	emb_type	emb_dim	window	iter	use bin thld	use nearest neigh	compare method	k	Type	avg acc/rank	w/o Italian acc/rank	english	german	latin	swedish	italian	reverse emb	emb_type	emb_dim	window	iter	use bin thld	use nearest neigh	compare method	k'''
 
@@ -34,34 +33,36 @@ for i, x in enumerate(HeaderTable):
     if x in HeaderDict:
         if x+'2' in HeaderDict:
             raise Exception('more than two versions of header '+x)
-        else:
-            HeaderDict[x+'2'] = i
+        HeaderDict[x+'2'] = i
     else:
         HeaderDict[x] = i
 
-maxlinks_unique = {'emb_typ':'w2v', 'emb_algorithm':'skipgram', 'compare_method':'cosine'}
+Maxlinks_unique = {'emb_typ':'w2v', 'emb_algorithm':'skipgram', 'compare_method':'cosine'}
 
-maxlinks_ind_set = ['emb_dim', 'max_links']
+Maxlinks_ind_set = ['emb_dim', 'max_links']
 
-maxlinks_dep_set = {'w/o Italian acc/rank2', 'english2', 'german2', 'latin2', 'swedish2'}
+Maxlinks_dep_set = {'w/o Italian acc/rank2', 'english2', 'german2', 'latin2', 'swedish2'}
 
-types = {'maxlinks':(maxlinks_unique, maxlinks_ind_set, maxlinks_dep_set)}
+types = {'maxlinks':(Maxlinks_unique, Maxlinks_ind_set, Maxlinks_dep_set)}
 
 this_type = 'maxlinks'
 files_dir = '~/results-SemEval-2020/results/'
 
 def main():
+    """
+        combine results files into plotfiles
+    """
     # check commmand line.
         # [Might be pointer to files,
         # name of extraction (i.e.max_links]
-    
+
     # read in files as lines in Table
     Table = []
     for fil in pl.Path(files_dir).iterdir():
         if  fil.is_file():
-            with open(fil) as fi:
-                for lin in fi:
-                    line = fi.split()
+            with open(fil) as f_in:
+                for lin in f_in:
+                    line = lin.split('\t')
                     Table.append(line)
 
     unique = types[this_type][0]
@@ -84,39 +85,58 @@ def main():
             if unique[key] != args[key]:
                 sel = False
                 break
-        if not sel: continue  # 
-                
+        if not sel:
+            continue  #
+
         # add add this line to seq of ind_set matches
         ind_key = ''
         for key in indepe:
             ind_key += ':' + args[key]
-            items = ind_sets.get(ind_key,None)
-            if items is None: items = [] # construct a new list
+            items = ind_sets.get(ind_key, None)
+            if items is None:
+                items = [] # construct a new list
             items.append(lineno)
 
     # sort ind_sets
     for iset in sorted(ind_sets.keys()):
-        # write the independent and dependent variables to a file 
+        # write the independent and dependent variables to a file
         #  (name based on           unique set values)
         spiset = iset[1:].split(':')
-        with open(this_type+unique_name,'w') as fo:
+        with open(this_type+unique_name, 'w') as f_out:
             # for each unique match in ind_sets
-            sums = [0]*(len(dep)+1) #entry for each dep var and count
+            sums = [0]*(len(depend)+1) #entry for each dep var and count
             for lns in ind_sets[iset]:
                 # average the dep variables for all lines in sequence
                 line = Table[lns]
                 sums[-1] += 1 # this is the count
-                for i,k in enumerate(depende):
+                for i, k in enumerate(depend):
                     sums[i] += float(line[HeaderDict[k]])
                 # write the independent variables
                 for val in spiset:
-                    print(val,sep='\t',end = '\t', file=fo)
+                    print(val, sep='\t', end='\t', file=f_out)
                 # write the dependent variables
                 for val in sums[:-1]:
-                    print(val/sums[-1],sep='\t',end = '\t', file=fo)
-                print(file=fo)
+                    print(val/sums[-1], sep='\t', end='\t', file=f_out)
+                print(file=f_out)
 
 def getargs(string):
+    """
+        parse the ...:Namespace(...) string from the beginning of a results line
+        returning a dict of parameter names and values
+    """
+    answer = dict()
+    argstr = string[1+string.find('('):-1]
+    argsar = argstr.split(', ')
+    for argp in argsar:
+        esign = argp.find('=')
+        key = argp[:esign]
+        if key[0:1] == '--':
+            key = key[2:]
+        val = argp[1+esign:]
+        answer[key] = val
+    return answer
 
 
 
+if __name__ == '__main__':
+    main()
