@@ -59,5 +59,5 @@ report.htm:	plotfiles.py plotfiles.txt ${datfiles}
 
 # chose a representative .dat file instead of checking dates on all
 
-Results-w2v-skipgram-Ne-Re-cca-java.dat:	../readResults.py
+Results-w2v-skipgram-Ne-Re-cosine-cca-java.dat:	../readResults.py
 	python3 ../readResults.py *sv #${svfiles}
