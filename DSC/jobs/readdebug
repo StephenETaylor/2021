@@ -1,0 +1,7 @@
+export FILES=/storage/plzen1/home/stephentaylor
+
+if [[ "$1" == "qI" ]] ; then \
+qsub -I -l walltime=3:0:0 -l select=1:ncpus=1:mem=12gb:scratch_local=40gb ; \
+elif [[ "$1" == "dP" ]] ; then \
+/bin/bash /storage/plzen1/home/stephentaylor/SemEval2020/task1/python-project/deb-lsc_ST.sh --read_zip_file 300-w2v-skipgram-5-10-0.zip --general_folder metacentrum-cca --num_workers 8 --num_repeat 1 --emb_type w2v --emb_algorithm skipgram --emb_dim 300 --transformation cca-java --compare_method cosine --use_nearest_neig --iter 10 --reverse_embedding --dont_use_java ; \
+else echo usage readdebug qI  /  dP ; fi
