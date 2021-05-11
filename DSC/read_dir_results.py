@@ -43,7 +43,7 @@ for i, x in enumerate(HeaderTable):
     else:
         HeaderDict[x] = i
 
-Maxlinks_unique = {'emb_type':'w2v', 'emb_algorithm':'skipgram', 'compare_method':'cosine'}
+Maxlinks_unique = {'emb_type':'w2v', 'emb_algorithm':'skipgram', 'compare_method':'cosine', 'reverse_embedding':'True', 'dont_use_java':'True'}
 
 Maxlinks_ind_set = ['emb_dim', 'max_links']
 
@@ -117,7 +117,11 @@ def main():
         # add add this line to seq of ind_set matches
         ind_key = ''
         for key in indepe:
-            ind_key += ':' + args[key]
+            val = args[key]
+            if val.isdigit(): #number is a positive int.  
+                if int(val)>99999999: raise Exception('ugly int')
+                val = ('00000000'+val)[-8:]  # introduce leading zeros
+            ind_key += ':' + val                   # for lexical sorting
         items = ind_sets.get(ind_key, None)
         if items is None:
             items = [] # construct a new list
@@ -130,6 +134,8 @@ def main():
         # write the independent and dependent variables to a file
         #  (name based on           unique set values)
             spiset = iset[1:].split(':')
+            for i,x in enumerate(spiset):
+                spiset[i] = x.lstrip('0') # remove leading zeros...
             # for each unique match in ind_sets
             sums = [0]*(len(depend)+1) #entry for each dep var and count
             for lns in ind_sets[iset]:
@@ -155,8 +161,8 @@ def main():
                     print(val, sep='\t', end='\t', file=f_out)
                 # write the dependent variables
                 for val in sums[:-1]:
-                    print(val/sums[-1], sep='\t', end='\t', file=f_out)
-                print(file=f_out)
+                    print("%.4f"%(val/sums[-1]), sep='\t', end='\t', file=f_out)
+                print(sums[-1],file=f_out)
 
 def getargs(string):
     """
