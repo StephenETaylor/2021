@@ -23,7 +23,7 @@
 
 """
 import pathlib as pl
-#import sys
+import sys
 
 EvaluationHeaders = ('Flags	Type	avg acc/rank	w/o Italian acc/rank'+
     '\tenglish	german	latin	swedish	italian	reverse emb	emb_type' +
@@ -56,6 +56,9 @@ this_type = 'maxlinks'
 Me = "/home/stephentaylor/"
 files_dir = Me + 'results-SemEval-2020/results/'
 
+all_lines = False
+stats = True
+
 def main():
     """
         combine results files into plotfiles
@@ -63,6 +66,21 @@ def main():
     # check commmand line.
         # [Might be pointer to files,
         # name of extraction (i.e.max_links]
+    global files_dir, all_lines, stats
+    state = 0
+    for a in sys.argv:
+        if state == 0:
+            state = 1
+        elif state == 1:
+            if a == '-all_lines':
+                all_lines = True
+        elif state == 1:
+            if a == '-stats':
+                stats = True
+        elif state == 1:
+            if a == '-nostats':
+                stats = False
+
 
     # read in files as lines in Table
     Table = []
@@ -106,20 +124,32 @@ def main():
         items.append(lineno)
         ind_sets[ind_key] = items
 
+    with open(this_type+unique_name, 'w') as f_out:
     # sort ind_sets
-    for iset in sorted(ind_sets.keys()):
+        for iset in sorted(ind_sets.keys()):
         # write the independent and dependent variables to a file
         #  (name based on           unique set values)
-        spiset = iset[1:].split(':')
-        with open(this_type+unique_name, 'w') as f_out:
+            spiset = iset[1:].split(':')
             # for each unique match in ind_sets
             sums = [0]*(len(depend)+1) #entry for each dep var and count
             for lns in ind_sets[iset]:
                 # average the dep variables for all lines in sequence
                 line = Table[lns]
                 sums[-1] += 1 # this is the count
+                if all_lines:
+                    # write the independent variables
+                    for val in spiset:
+                        print(val, sep='\t', end='\t', file=f_out)
                 for i, k in enumerate(depend):
-                    sums[i] += float(line[HeaderDict[k]])
+                    val = float(line[HeaderDict[k]])
+                    sums[i] += val
+                    if all_lines:
+                        # write the dependent variables
+                        print(val, sep='\t', end='\t', file=f_out)
+                if all_lines:
+                    print(file=f_out)
+
+            if stats:
                 # write the independent variables
                 for val in spiset:
                     print(val, sep='\t', end='\t', file=f_out)
