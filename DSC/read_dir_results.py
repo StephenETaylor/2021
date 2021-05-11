@@ -22,10 +22,16 @@
     and output a plot file
 
 """
-import pathlist as pl
+import pathlib as pl
 #import sys
 
-EvaluationHeaders = '''Flags	Type	avg acc/rank	w/o Italian acc/rank	english	german	latin	swedish	italian	reverse emb	emb_type	emb_dim	window	iter	use bin thld	use nearest neigh	compare method	k	Type	avg acc/rank	w/o Italian acc/rank	english	german	latin	swedish	italian	reverse emb	emb_type	emb_dim	window	iter	use bin thld	use nearest neigh	compare method	k'''
+EvaluationHeaders = ('Flags	Type	avg acc/rank	w/o Italian acc/rank'+
+    '\tenglish	german	latin	swedish	italian	reverse emb	emb_type' +
+    '\temb_dim	window	iter	use bin thld	use nearest neigh' +
+    '\tcompare method	k	Type	avg acc/rank' +
+    '\tw/o Italian acc/rank	english	german	latin	swedish	italian' +
+    '\treverse emb	emb_type	emb_dim	window	iter	use bin thld' +
+    '\tuse nearest neigh	compare method	k')
 
 HeaderTable = EvaluationHeaders.split('\t')
 HeaderDict = dict()
@@ -37,7 +43,7 @@ for i, x in enumerate(HeaderTable):
     else:
         HeaderDict[x] = i
 
-Maxlinks_unique = {'emb_typ':'w2v', 'emb_algorithm':'skipgram', 'compare_method':'cosine'}
+Maxlinks_unique = {'emb_type':'w2v', 'emb_algorithm':'skipgram', 'compare_method':'cosine'}
 
 Maxlinks_ind_set = ['emb_dim', 'max_links']
 
@@ -46,7 +52,9 @@ Maxlinks_dep_set = {'w/o Italian acc/rank2', 'english2', 'german2', 'latin2', 's
 types = {'maxlinks':(Maxlinks_unique, Maxlinks_ind_set, Maxlinks_dep_set)}
 
 this_type = 'maxlinks'
-files_dir = '~/results-SemEval-2020/results/'
+
+Me = "/home/stephentaylor/"
+files_dir = Me + 'results-SemEval-2020/results/'
 
 def main():
     """
@@ -77,7 +85,7 @@ def main():
     # for each line in Table,
     for lineno, line in enumerate(Table):
         # extract flags to args dict
-        args = getargs(line[HeaderDict['flags']])
+        args = getargs(line[HeaderDict['Flags']])
 
         # select this line if unique matches
         sel = True
@@ -92,10 +100,11 @@ def main():
         ind_key = ''
         for key in indepe:
             ind_key += ':' + args[key]
-            items = ind_sets.get(ind_key, None)
-            if items is None:
-                items = [] # construct a new list
-            items.append(lineno)
+        items = ind_sets.get(ind_key, None)
+        if items is None:
+            items = [] # construct a new list
+        items.append(lineno)
+        ind_sets[ind_key] = items
 
     # sort ind_sets
     for iset in sorted(ind_sets.keys()):
@@ -133,6 +142,8 @@ def getargs(string):
         if key[0:1] == '--':
             key = key[2:]
         val = argp[1+esign:]
+        if val[0] == "'" or val[0] == '"':
+            val = val[1:-1]
         answer[key] = val
     return answer
 
