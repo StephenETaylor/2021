@@ -7,7 +7,7 @@ lsc = files +"/SemEval2020/task1/python-project/run-lsc_ST.sh"
  
 run_lsc = run+lsc 
 def base_params() :
-    return " --general_folder metacentrum-cca --num_workers 8 --num_repeat 1  --transformation cca-java --compare_method cosine --use_nearest_neig  --reverse_embedding "
+    return " --general_folder metacentrum-cca --num_workers 8 --num_repeat 1  --transformation cca-java --compare_method cosine --use_nearest_neig  --reverse_embedding --dont_use_java"
 
 def params(zipfile ,emb_dim, emb_type, emb_algorithm, itera):
     temp =  "--read_zip_file %s --emb_type %s --emb_algorithm %s --emb_dim %s --iter %s "
